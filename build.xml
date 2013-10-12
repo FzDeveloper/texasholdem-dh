@@ -41,6 +41,7 @@
         </javac>
     </target>
 	<target depends="build" name="jar">
+		<delete dir="dist"/>
         <mkdir dir="dist"/>
 		<mkdir dir="dist/${ant.project.name}"/>
 		<mkdir dir="dist/${ant.project.name}/libs"/>
