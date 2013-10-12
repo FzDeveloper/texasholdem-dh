@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="texasholdem-dh">
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
+    <path id="texasholdem-dh.classpath">
+        <pathelement location="texas-holdem-desktop/bin"/>
+        <pathelement location="texas-holdem-desktop/libs/gdx-backend-lwjgl-natives.jar"/>
+        <pathelement location="texas-holdem-desktop/libs/gdx-backend-lwjgl-sources.jar"/>
+        <pathelement location="texas-holdem-desktop/libs/gdx-backend-lwjgl.jar"/>
+        <pathelement location="texas-holdem-desktop/libs/gdx-natives.jar"/>
+        <pathelement location="texas-holdem/libs/gdx.jar"/>
+        <pathelement location="texas-holdem/libs/tween-engine-api.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="texas-holdem-desktop/bin"/>
+        <copy includeemptydirs="false" todir="texas-holdem-desktop/bin">
+            <fileset dir="texas-holdem/src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="texas-holdem-desktop/bin">
+            <fileset dir="texas-holdem-desktop/src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="texas-holdem-desktop/bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="texas-holdem-desktop/bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="texas-holdem/src"/>
+            <src path="texas-holdem-desktop/src"/>
+            <classpath refid="texasholdem-dh.classpath"/>
+        </javac>
+    </target>
+	<target depends="build" name="jar">
+        <mkdir dir="dist"/>
+		<mkdir dir="dist/libs"/>
+        <jar destfile="dist/${ant.project.name}.jar" basedir="texas-holdem-desktop/bin" update="true">
+            <manifest>
+                <attribute name="Main-Class" value="org.darkhood.games.texasholdem.Main"/>
+            </manifest>
+        </jar>
+		<copy includeemptydirs="false" todir="dist/libs">
+	      <fileset dir="texas-holdem/libs"/>
+			<fileset dir="texas-holdem-desktop/libs">
+			</fileset>
+		</copy>
+		<echo file="dist/texasholdem-dh" append="false">#\!/bin/sh${line.separator}java -classpath "libs/gdx-backend-lwjgl-natives.jar:libs/gdx-backend-lwjgl-sources.jar:libs/gdx-backend-lwjgl.jar:libs/gdx-natives.jar:libs/gdx.jar:libs/tween-engine-api.jar:texasholdem-dh.jar" org.darkhood.games.texasholdem.Main
+		</echo>
+    </target>
+</project>

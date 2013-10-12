@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="texas-holdem-desktop/src"/>
 	<classpathentry kind="src" path="texas-holdem/src"/>
+	<classpathentry kind="src" path="texas-holdem-desktop/src"/>
 	<classpathentry kind="src" path="texas-holdem/test"/>
 	<classpathentry kind="lib" path="texas-holdem-desktop/libs/gdx-backend-lwjgl-natives.jar"/>
 	<classpathentry kind="lib" path="texas-holdem-desktop/libs/gdx-backend-lwjgl-sources.jar"/>
 	<classpathentry kind="lib" path="texas-holdem-desktop/libs/gdx-backend-lwjgl.jar"/>
 	<classpathentry kind="lib" path="texas-holdem-desktop/libs/gdx-natives.jar"/>
-	<classpathentry kind="lib" path="texas-holdem/libs/gdx-sources.jar"/>
-	<classpathentry kind="lib" path="texas-holdem/libs/gdx.jar"/>
-	<classpathentry kind="lib" path="texas-holdem/libs/tween-engine-api-sources.jar"/>
-	<classpathentry kind="lib" path="texas-holdem/libs/tween-engine-api.jar"/>
+	<classpathentry kind="lib" path="texas-holdem/libs/gdx.jar" sourcepath="texas-holdem/libs/gdx-sources.jar"/>
+	<classpathentry kind="lib" path="texas-holdem/libs/tween-engine-api.jar" sourcepath="texas-holdem/libs/tween-engine-api-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="texas-holdem-desktop/bin"/>
