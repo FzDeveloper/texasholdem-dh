@@ -42,22 +42,24 @@
     </target>
 	<target depends="build" name="jar">
         <mkdir dir="dist"/>
-		<mkdir dir="dist/libs"/>
-        <jar destfile="dist/${ant.project.name}.jar" basedir="texas-holdem-desktop/bin" update="true">
+		<mkdir dir="dist/${ant.project.name}"/>
+		<mkdir dir="dist/${ant.project.name}/libs"/>
+        <jar destfile="dist/${ant.project.name}/libs/${ant.project.name}.jar" basedir="texas-holdem-desktop/bin" update="true">
             <manifest>
                 <attribute name="Main-Class" value="org.darkhood.games.texasholdem.Main"/>
             </manifest>
         </jar>
     </target>
-	<target depends="jar" name="package">
-		<mkdir dir="builds"/>
-		<copy includeemptydirs="false" todir="dist/libs">
+	<target depends="jar" name="dist">
+		<copy includeemptydirs="false" todir="dist/${ant.project.name}/libs">
 	      <fileset dir="texas-holdem/libs"/>
 		   <fileset dir="texas-holdem-desktop/libs"/>
 		</copy>
-		<echo file="dist/texasholdem-dh" append="false">#\!/bin/sh${line.separator}java -classpath "libs/gdx-backend-lwjgl-natives.jar:libs/gdx-backend-lwjgl-sources.jar:libs/gdx-backend-lwjgl.jar:libs/gdx-natives.jar:libs/gdx.jar:libs/tween-engine-api.jar:texasholdem-dh.jar" org.darkhood.games.texasholdem.Main
+		<echo file="dist/${ant.project.name}/texasholdem-dh.sh" append="false">#\!/bin/sh${line.separator}java -classpath "libs/gdx-backend-lwjgl-natives.jar:libs/gdx-backend-lwjgl-sources.jar:libs/gdx-backend-lwjgl.jar:libs/gdx-natives.jar:libs/gdx.jar:libs/tween-engine-api.jar:texasholdem-dh.jar" org.darkhood.games.texasholdem.Main
 		</echo>
-		<zip destfile="builds/${ant.project.name}_latest.zip" basedir="dist" update="true"/>
+		<zip destfile="dist/${ant.project.name}_latest.zip" basedir="dist" update="true">
+			<excludesfile name="${ant.project.name}_latest.zip"/>
+		</zip>
 	</target>
 	
 </project>
