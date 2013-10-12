@@ -48,12 +48,16 @@
                 <attribute name="Main-Class" value="org.darkhood.games.texasholdem.Main"/>
             </manifest>
         </jar>
+    </target>
+	<target depends="jar" name="package">
+		<mkdir dir="builds"/>
 		<copy includeemptydirs="false" todir="dist/libs">
 	      <fileset dir="texas-holdem/libs"/>
-			<fileset dir="texas-holdem-desktop/libs">
-			</fileset>
+		   <fileset dir="texas-holdem-desktop/libs"/>
 		</copy>
 		<echo file="dist/texasholdem-dh" append="false">#\!/bin/sh${line.separator}java -classpath "libs/gdx-backend-lwjgl-natives.jar:libs/gdx-backend-lwjgl-sources.jar:libs/gdx-backend-lwjgl.jar:libs/gdx-natives.jar:libs/gdx.jar:libs/tween-engine-api.jar:texasholdem-dh.jar" org.darkhood.games.texasholdem.Main
 		</echo>
-    </target>
+		<zip destfile="builds/${ant.project.name}_latest.zip" basedir="dist" update="true"/>
+	</target>
+	
 </project>
