@@ -69,5 +69,11 @@
 		<zip destfile="dist/${ant.project.name}_latest.zip" basedir="dist" update="true" 
 			excludes="${ant.project.name}_latest.zip" compress="true" />
 	</target>
-	
+	<!--
+	<target name="test">
+		<junit haltonerror="false" haltonfailure="false">
+			
+		</junit>
+	</target>
+	-->
 </project>
