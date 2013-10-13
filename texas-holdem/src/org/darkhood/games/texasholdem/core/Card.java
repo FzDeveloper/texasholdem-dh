@@ -18,7 +18,7 @@
 
 package org.darkhood.games.texasholdem.core;
 
-public class Card {
+public class Card implements Comparable<Card> {
 	private final int suit;
 	private final int value;
 	
@@ -65,5 +65,17 @@ public class Card {
 	public String toString() {
 		// TODO: implement this
 		return String.format("%s %s", value, suit);
+	}
+
+	@Override
+	public int compareTo(Card otherCard) {
+		// should be fair since each Card hash code is unique and uses 
+		// both suit and value variables
+		if (this.hashCode() > otherCard.hashCode()) {
+			return 1;
+		} else if (this.hashCode() < otherCard.hashCode()) {
+			return -1;
+		}
+		return 0;
 	}
 }
