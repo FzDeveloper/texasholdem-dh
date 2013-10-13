@@ -21,10 +21,10 @@ package org.darkhood.games.texasholdem.core;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ArrayMap;
 
-public class Board {
+public class Table {
 	private int stake;
 	private final Array<Pot> pots;
-	private final TexasHoldemTournament game;
+	private final Tournament game;
 	
 	private Pot getNextPotAfter(Pot pot) {
 		int potIndex = pots.indexOf(pot, true);
@@ -45,7 +45,7 @@ public class Board {
 		this.stake = newStake;
 	}
 	
-	public Board(TexasHoldemTournament game) {
+	public Table(Tournament game) {
 		this.game = game;
 		this.stake = game.settings.getStake();
 		

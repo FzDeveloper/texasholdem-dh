@@ -23,7 +23,7 @@ import com.badlogic.gdx.utils.ArrayMap;
 
 // TODO: implement blind raising (use the blindRaiseSum and handCount variables)
 
-public final class TexasHoldemTournament {
+public final class Tournament {
 	protected GameSettings settings;
 	protected final Array<Player> players;
 	protected final ArrayMap<Integer, Integer> playerMap;
@@ -35,9 +35,9 @@ public final class TexasHoldemTournament {
 	private final Deck deck;
 	private int currentBet;
 	private Array<Card> sharedCards;
-	private Board board;
+	private Table table;
 	
-	public TexasHoldemTournament() {
+	public Tournament() {
 		this.players = new Array<Player>();
 		this.playerMap = new ArrayMap<Integer, Integer>();
 		this.gameState = GameState.LOBBY;
@@ -45,7 +45,7 @@ public final class TexasHoldemTournament {
 		this.deck = Deck.createDeck(true);
 		this.sharedCards = new Array<Card>(5);
 		this.blindRaiseSum = settings.getBlindRaiseSum();
-		this.board = new Board(this);
+		this.table = new Table(this);
 	}
 	
 	public int getGameState() {
@@ -81,9 +81,9 @@ public final class TexasHoldemTournament {
 			return;
 		
 		// Reset deck cursor and shuffle
-		board.clearPots();
+		table.clearPots();
 		//pot = 0;
-		currentBet = board.getStake();
+		currentBet = table.getStake();
 		sharedCards.clear();
 		deck.reset();
 		deck.shuffle();
@@ -144,13 +144,13 @@ public final class TexasHoldemTournament {
 		for (Player player : players) {
 			if (player.isBigBlind) {
 				player.callSum = 0;
-				board.contribute(player, board.getStake());
+				table.contribute(player, table.getStake());
 			} else if (player.isSmallBlind) {
-				int betSum = board.getStake() / 2;
+				int betSum = table.getStake() / 2;
 				player.callSum = betSum;
-				board.contribute(player, betSum);
+				table.contribute(player, betSum);
 			} else {
-				player.callSum = board.getStake();
+				player.callSum = table.getStake();
 			}
 		}
 		
@@ -219,7 +219,7 @@ public final class TexasHoldemTournament {
 	}
 	
 	private void resetHandRound() {
-		currentBet = board.getStake();
+		currentBet = table.getStake();
 		// reset player round specific flags
 		for (Player p : players) {
 			if (p.folded) 
@@ -288,7 +288,7 @@ public final class TexasHoldemTournament {
 			return;
 		// Can't bet if there is already a bet. 
 		// Player should raise instead.
-		if (currentBet > board.getStake()) {
+		if (currentBet > table.getStake()) {
 			return;
 		}
 		// The minimum bet sum is current bet sum.
@@ -297,7 +297,7 @@ public final class TexasHoldemTournament {
 		Player player = getPlayer(playerId);
 		if (player != null && player.chips >= betSum) {
 			currentBet = betSum;
-			board.contribute(player, betSum);
+			table.contribute(player, betSum);
 			player.calledSum = betSum;
 			player.callSum = player.callSum - betSum < 0 ? 0 : player.callSum - betSum;
 			
@@ -333,7 +333,7 @@ public final class TexasHoldemTournament {
 			player.calledSum = raiseSum;
 			player.callSum = player.callSum - raiseSum < 0 ? 0 : player.callSum - raiseSum;			
 			currentBet = raiseSum;
-			board.contribute(player, raiseSum);
+			table.contribute(player, raiseSum);
 			player.checked = true;
 			nextPlayerTurn();
 		}
@@ -348,11 +348,11 @@ public final class TexasHoldemTournament {
 				player.callSum -= player.chips;
 				player.calledSum += player.chips;
 				// Forced to going All-In
-				board.contribute(player, player.chips);
+				table.contribute(player, player.chips);
 			} else {
 				player.calledSum += player.callSum;
 				player.callSum = 0;
-				board.contribute(player, player.callSum);
+				table.contribute(player, player.callSum);
 			}
 			player.checked = true;
 			nextPlayerTurn();

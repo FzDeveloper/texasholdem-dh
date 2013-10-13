@@ -25,13 +25,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.darkhood.games.texasholdem.core.GameState;
-import org.darkhood.games.texasholdem.core.TexasHoldemTournament;
+import org.darkhood.games.texasholdem.core.Tournament;
 import org.darkhood.games.texasholdem.network.PacketHeaders;
 
 import com.badlogic.gdx.utils.Array;
 
 public final class GameServer { 
-	protected final TexasHoldemTournament game;
+	protected final Tournament game;
 	private int port = 44491;
 	private volatile boolean isRunning = false;
 	private ServerSocket serverSocket;
@@ -60,7 +60,7 @@ public final class GameServer {
 	public GameServer() {
 		//this.executor = Executors.newCachedThreadPool();	
 		this.connectedClients = new Array<ClientHandler>(maxPlayers);
-		this.game = new TexasHoldemTournament();
+		this.game = new Tournament();
 	}
 	
 	public void start() {
