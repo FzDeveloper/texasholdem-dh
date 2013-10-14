@@ -114,8 +114,9 @@ public class Hand {
 			int topCardRank = cardsArray[MAX_CARDS_IN_HAND - 1].getValue();
 			int nextToTheTopCardRank = cardsArray[MAX_CARDS_IN_HAND - 2].getValue();
 			int bottomCardRank = cardsArray[0].getValue();
-			if ((nextToTheTopCardRank == CardValues.FIVE && topCardRank == CardValues.ACE
-				&& nextToTheTopCardRank - bottomCardRank == 3)
+			if ((nextToTheTopCardRank == CardValues.FIVE 
+					&& topCardRank == CardValues.ACE
+					&& nextToTheTopCardRank - bottomCardRank == 3)
 				|| (topCardRank - bottomCardRank == 4)) {
 				isStraight = true;
 			}

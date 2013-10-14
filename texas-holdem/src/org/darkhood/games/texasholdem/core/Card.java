@@ -69,12 +69,11 @@ public class Card implements Comparable<Card> {
 
 	@Override
 	public int compareTo(Card otherCard) {
-		// should be fair since each Card hash code is unique and uses 
-		// both suit and value variables
-		if (this.hashCode() > otherCard.hashCode()) {
-			return 1;
-		} else if (this.hashCode() < otherCard.hashCode()) {
-			return -1;
+		if (this.value != otherCard.value) {
+			return this.value - otherCard.value;
+		}
+		if (this.suit != otherCard.suit) {
+			return this.suit - otherCard.suit;
 		}
 		return 0;
 	}
