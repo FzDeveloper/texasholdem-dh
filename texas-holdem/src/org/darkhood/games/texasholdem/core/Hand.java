@@ -23,7 +23,9 @@ import java.util.Arrays;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ArrayMap;
 
-public class Hand {
+// TODO: implement Comparable<Hand> interface
+
+public class Hand implements Comparable<Hand> {
 	private static final int MAX_CARDS_IN_HAND = 5;
 	private final Array<Card> cards;
 	private HandType handType = null;
@@ -145,5 +147,58 @@ public class Hand {
 		} else {
 			handHistogram.put(card.getValue(), 1);
 		}
+	}
+
+	@Override
+	public int compareTo(Hand otherHand) {
+		HandType handType1 = this.getHandType();
+		HandType handType2 = otherHand.getHandType();
+		if (handType1 == null || handType2 == null) {
+			//throw new Exception("");
+		}
+		if (handType1 == handType2) {
+			Card[] hand1CardsArray = this.cards.items.clone();
+			Card[] hand2CardsArray = otherHand.cards.items.clone();
+			Arrays.sort(hand1CardsArray);
+			Arrays.sort(hand2CardsArray);
+			int hand1TopCardRank = hand1CardsArray[MAX_CARDS_IN_HAND - 1].getValue();
+			int hand2TopCardRank = hand2CardsArray[MAX_CARDS_IN_HAND - 1].getValue();
+			
+			switch (handType1) {
+			case STRAIGHT_FLUSH:
+			case STRAIGHT:
+				return Integer.compare(hand1TopCardRank, hand2TopCardRank);
+			case FLUSH:
+				for (int i = MAX_CARDS_IN_HAND - 1; i >= 0; i--) {
+					int hand1CardRank = hand1CardsArray[i].getValue();
+					int hand2CardRank = hand2CardsArray[i].getValue();
+					int comparisonResult = Integer.compare(hand1CardRank, hand2CardRank);
+					if (comparisonResult != 0)
+						return comparisonResult;
+				}
+				return 0;
+			case FULL_HOUSE:
+				// TODO:				
+				break;
+			case FOUR_OF_A_KIND:
+				// TODO:
+				break;
+			case THREE_OF_A_KIND:
+				// TODO:
+				break;
+			case TWO_PAIR:
+				// TODO:
+				break;
+			case ONE_PAIR:
+				// TODO:
+				break;
+			case HIGH_CARD:
+				// TODO:
+				break;
+			}
+		} else {
+			return Integer.compare(handType1.getIntValue(), handType2.getIntValue());
+		}
+		return 0;
 	}
 }

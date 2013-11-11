@@ -59,7 +59,7 @@ public class Deck {
 	}
 	
 	public Card takeCard() {
-		if (index < 0) 
+		if (index < 0)
 			return null;
 		return cards.get(index--);
 	}

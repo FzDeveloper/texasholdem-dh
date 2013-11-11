@@ -35,6 +35,10 @@ public enum HandType {
 	
 	private final int type;
 	
+	public final int getIntValue() {
+		return type;
+	}
+	
 	HandType(int type) {
 		this.type = type;
 	}

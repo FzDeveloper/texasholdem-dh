@@ -235,9 +235,8 @@ public final class Tournament {
 	
 	private void showdown() {
 		// TODO: implement the showdown
-		
-		// evaluate players' hands
-		// choose winners
+		// TODO: implement a recursive method returning player's best possible hand
+		// TODO: compare players hands' and choose winner on each pot
 		
 		// change the game state. next hand.
 		setState(GameState.PREFLOP);
